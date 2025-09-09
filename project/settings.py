@@ -121,23 +121,7 @@ USE_TZ = True
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-import os
-# import dj_database_url
 
-DEBUG = False
-ALLOWED_HOSTS = ["*"]
-
-# Static files
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-# # Whitenoise for static files
-# MIDDLEWARE.insert(1, "whitenoise.middleware.WhiteNoiseMiddleware")
-
-# # Database (for Render PostgreSQL)
-# DATABASES = {
-#     'default': dj_database_url.config(default=os.getenv("DATABASE_URL"))
-# }
 
 import os
 from pathlib import Path
@@ -146,44 +130,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 STATIC_URL = '/static/'
 
-# This is required for collectstatic
+# ✅ This is required for deployment
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-# (Optional, but recommended for local dev)
+# ✅ Optional (for local dev only)
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
-
-
-
-# import os
-# import dj_database_url
-# from pathlib import Path
-
-# BASE_DIR = Path(__file__).resolve().parent.parent
-
-# # Default: SQLite (for local dev)
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
-# # Override with Render Postgres if DATABASE_URL exists
-# DATABASE_URL = os.getenv("DATABASE_URL")
-# if DATABASE_URL:
-#     DATABASES['default'] = dj_database_url.parse(DATABASE_URL, conn_max_age=600)
-
-# import os
-# from pathlib import Path
-
-# BASE_DIR = Path(__file__).resolve().parent.parent
-
-# STATIC_URL = "/static/"
-
-# # 👇 This is the missing part
-# STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-
-# # Optional but recommended (for Whitenoise)
-# STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
