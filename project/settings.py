@@ -129,14 +129,24 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-STATIC_URL = '/static/'
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = os.getenv("DEBUG", "False") == "True"
+
+# Allowed hosts (localhost for dev, onrender for prod)
 ALLOWED_HOSTS = ["127.0.0.1", "localhost", ".onrender.com"]
 
+# Static files settings
+STATIC_URL = "/static/"
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
-# ✅ This is required for deployment
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-# ✅ Optional (for local dev only)
+# (Optional) for development only
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, "static"),
 ]
+
+# WhiteNoise settings (for serving static files in production)
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+# Media (optional, for user uploads)
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
