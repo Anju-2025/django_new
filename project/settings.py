@@ -10,7 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
+import os
 from pathlib import Path
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -115,6 +117,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
+STATIC_URL='static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 
 # Default primary key field type
@@ -124,29 +128,20 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 
-import os
-from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv("DEBUG", "False") == "True"
+STATIC_URL = '/static/'
 
-# Allowed hosts (localhost for dev, onrender for prod)
-ALLOWED_HOSTS = ["127.0.0.1", "localhost", ".onrender.com"]
+# Required for Render Deployment
 
-# Static files settings
-STATIC_URL = "/static/"
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
-# (Optional) for development only
+# Optional (for local dev)
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
+    os.path.join(BASE_DIR, 'static'),
 ]
 
-# WhiteNoise settings (for serving static files in production)
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", ".onrender.com"]
 
-# Media (optional, for user uploads)
-MEDIA_URL = "/media/"
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+# Whitenoise Settings
+MIDDLEWARE.insert(1, "whitenoise.middleware.WhiteNoiseMiddleware")
